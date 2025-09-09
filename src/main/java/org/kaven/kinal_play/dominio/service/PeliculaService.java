@@ -1,5 +1,6 @@
 package org.kaven.kinal_play.dominio.service;
 
+import org.kaven.kinal_play.dominio.dto.ModPeliculaDto;
 import org.kaven.kinal_play.dominio.dto.PeliculaDto;
 import org.kaven.kinal_play.dominio.repository.PeliculaRepository;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,11 @@ public class PeliculaService {
         return this.peliculaRepository.obtenerPeliculaPorCodigo(codigo);
     }
 
+    public PeliculaDto guardarPelicula(PeliculaDto peliculaDto){
+        return this.peliculaRepository.guardarPelicula(peliculaDto);
+    }
+
+    public PeliculaDto modificarPelicula(Long codigo, ModPeliculaDto modpeliculaDto){
+        return this.peliculaRepository.modificarPelicula(codigo, modpeliculaDto);
+    }
 }

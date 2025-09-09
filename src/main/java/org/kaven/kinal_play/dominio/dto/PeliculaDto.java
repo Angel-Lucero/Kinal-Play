@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public record PeliculaDto(
         String name,
-        String duration,
+        Integer duration,
         Genre genre,
         LocalDate releaseDate,
         Double rating

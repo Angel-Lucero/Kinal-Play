@@ -18,7 +18,7 @@ public class PeliculaEntity {
     @Column(precision = 3, nullable = false)
     private Integer duracion;
     @Column(length = 40, nullable = false)
-    private String genero;
+    private String genero;//varchar(40)
     @Column(name = "fecha_estreno")
     private LocalDate fechaEstreno;
     @Column(precision = 3, scale = 2)
