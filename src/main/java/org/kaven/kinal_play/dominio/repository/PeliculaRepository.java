@@ -11,4 +11,6 @@ public interface PeliculaRepository {
     PeliculaDto obtenerPeliculaPorCodigo(Long codigo);
     PeliculaDto guardarPelicula(PeliculaDto peliculaDto);
     PeliculaDto modificarPelicula(Long codigo,ModPeliculaDto peliculaDto);
+    void eliminarPelicula(Long codigo);
+
 }

@@ -1,5 +1,11 @@
 package org.kaven.kinal_play.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.kaven.kinal_play.dominio.dto.ModPeliculaDto;
 import org.kaven.kinal_play.dominio.dto.PeliculaDto;
 import org.kaven.kinal_play.dominio.service.PeliculaService;
@@ -10,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/peliculas/v1")//Controla todas las
+@RequestMapping("/v1/peliculas")
+@Tag(name = "Peliculas", description = "Operaciones(CRUD) para todas las peliculas")
 public class PeliculaController {
     private final PeliculaService peliculaService;
 
@@ -25,11 +32,21 @@ public class PeliculaController {
         //500: Interno del servido, erro de lógica
         //405: Metodo de solicitud incorrecto
         //return this.peliculaService.obtenerTodo();
-        return;ResponseEntity.ok(this.peliculaService.obtenerTodo());
+        return ResponseEntity.ok(this.peliculaService.obtenerTodo());
     }
-    // 4
+
     @GetMapping("{codigo}")
-    public ResponseEntity<PeliculaDto> obtenerPeliculaPorCodigo(@PathVariable Long codigo){
+    @Operation(
+            summary =  "Obtener una pelicula a partit de su codigo",
+            description = "Retorna la pelicula que coincida con el codigo enviado",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "La pelicula fue encontrada con exito"),
+                    @ApiResponse(responseCode = "404", description = "Pelicula no encontrada", content = @Content)
+            }
+    )
+    public ResponseEntity<PeliculaDto> obtenerPeliculaPorCodigo
+            (@Parameter(description = "Identificador de la pelicula a recuperar", example = "5")
+             @PathVariable Long codigo){
         //return this.peliculaService.obtenerPeliculaPorCodigo(codigo);
         return ResponseEntity.ok(this.peliculaService.obtenerPeliculaPorCodigo(codigo));
     }
@@ -43,12 +60,18 @@ public class PeliculaController {
                 .guardarPelicula(peliculaDto));
     }
     //modificarPelicula
-    @PutMapping
+    @PutMapping("{codigo}")
     public ResponseEntity<PeliculaDto> modificarPelicula
-    (@PathVariable Long codigo, @RequestBody ModPeliculaDto peliculaDto){
+    (@PathVariable Long codigo, @RequestBody @Valid ModPeliculaDto modpeliculaDto){
+        return ResponseEntity.ok(this.peliculaService.modificarPelicula(codigo, modpeliculaDto));
+    }
+
+    //eliminarPelicula
+    @DeleteMapping("{codigo}")
+    public ResponseEntity<PeliculaDto> eliminarPelicula(@PathVariable Long codigo){
+        this.peliculaService.obtenerPeliculaPorCodigo(codigo);
         return ResponseEntity.ok().build();
     }
-    //eliminarPelicula
 
     //exception - PeliculaNoExisteException, PeliculaYaExisteException
 

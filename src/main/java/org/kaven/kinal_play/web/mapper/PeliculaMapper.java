@@ -1,10 +1,12 @@
 package org.kaven.kinal_play.web.mapper;
 
+import org.kaven.kinal_play.dominio.dto.ModPeliculaDto;
 import org.kaven.kinal_play.dominio.dto.PeliculaDto;
 import org.kaven.kinal_play.persistence.entity.PeliculaEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ public interface PeliculaMapper {
     @Mapping(source = "genero", target = "genre", qualifiedByName = "generarGenre")
     @Mapping(source = "fechaEstreno", target = "releaseDate")
     @Mapping(source = "calificacion", target = "rating")
+    @Mapping(source = "estado", target = "status")
     PeliculaDto toDto(PeliculaEntity entity);
     List<PeliculaDto> toDto(Iterable<PeliculaEntity> entities);
     //Para convertir Dto -> Entity - toEntity
@@ -23,5 +26,15 @@ public interface PeliculaMapper {
     @InheritInverseConfiguration
     @Mapping(source = "genre", target = "genero", qualifiedByName = "generarGenero")
     PeliculaEntity toEntity(PeliculaDto peliculaDto);
+
+    //Auto actualizar el ModPeliculaDto a Pelicula Entity
+
+    @Mapping(source = "name", target = "nombre")
+    @Mapping(source = "releaseDate", target = "fechaEstreno")
+    @Mapping(source = "rating", target = "calificacion")
+    void modificarEntityFromDto(ModPeliculaDto modPeliculaDto, @MappingTarget PeliculaEntity peliculaEntity);
+
+
+
 
 }
