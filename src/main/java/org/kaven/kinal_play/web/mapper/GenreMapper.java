@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GenreMapper {
     @Named("generarGenre")
-    public static Genre generar(String genero){
+    public Genre stringAGenre(String genero){
         if (genero == null) return null;
             return switch (genero.toUpperCase()) {
                 case "ACCION" -> Genre.ACTION;
@@ -24,7 +24,7 @@ public class GenreMapper {
     }
 
     @Named("generarGenero")
-    public static String generarGenero(Genre genre){
+    public String genreAString(Genre genre){
         if (genre == null) return null;
         return switch (genre){
             case ACTION -> "ACCION";

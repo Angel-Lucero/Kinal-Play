@@ -27,7 +27,6 @@ public class PeliculaEntityRepository implements PeliculaRepository {
         this.peliculaMapper = peliculaMapper;
     }
 
-
     @Override
     public List<PeliculaDto> obtnerTodo() {
         return this.peliculaMapper.toDto(this.crudPelicula.findAll());
